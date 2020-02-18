@@ -1,3 +1,4 @@
+import { AuthModule } from './auth/auth.module';
 import { Module, forwardRef } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
@@ -7,6 +8,8 @@ import { ConfigModule } from "./config/config.module";
 import { Configuration } from "./config/config.keys";
 import { ConfigService } from "./config/config.service";
 import { dataBaseProviders } from "./database/database.providers";
+import { UsersService } from './users/users.service';
+import { UsersRepository } from './users/users.repository';
 // import { dataBaseProviders } from "./database/database.service";
 // import { DataBaseService } from "./database/database.service";
 // import { databaseProviders } from "./database/database.service";
@@ -15,7 +18,8 @@ import { dataBaseProviders } from "./database/database.providers";
   imports: [
     dataBaseProviders,
     UsersModule,
-    ConfigModule
+    ConfigModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService]

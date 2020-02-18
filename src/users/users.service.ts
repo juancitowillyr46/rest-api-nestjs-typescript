@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { UsersRepository } from "./users.repository";
 import { UserCreateDto } from "./dto/user-create.dto";
-import { UserGetDto } from "./dto/user-read.dto";
+import { hash, genSalt, compare } from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
@@ -9,8 +9,13 @@ export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
   async create(user: UserCreateDto) {
-    let response: { data; statusCode; message, error };
+    let response: { data; statusCode; message; error };
     let exist = false;
+
+    const salt = await genSalt(10);
+    const password = (await hash(user.password, salt));
+    user.password = password;
+
     await this.usersRepository.validateUser(user.email).then((res) => exist = res);
     if(exist) {
       response = {
@@ -122,6 +127,10 @@ export class UsersService {
       return response;
     }
 
+  }
+
+  async readByEmail(username: string){
+    return await this.usersRepository.getUserByUserName(username)
   }
 }
 

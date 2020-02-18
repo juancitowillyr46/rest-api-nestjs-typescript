@@ -77,4 +77,15 @@ export class UsersRepository {
     return find;
   }
 
+  async getUserByUserName(username: string): Promise<any> {
+    const that = this;
+    const find = await that.userModel.findOne({username: username}).then((res) => {
+      return (res)? res : null;
+    }).catch(() => {
+      return null;
+    });
+    return find;
+  }
+
+
 }
