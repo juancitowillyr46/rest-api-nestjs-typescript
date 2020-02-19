@@ -12,7 +12,7 @@ export class UsersRepository {
   async create(user: UserCreateDto): Promise<User> {
     const that = this;
     const create = new that.userModel(user);
-    return create.save();
+    return await create.save();
   }
 
   async findAll(): Promise<User[]> {

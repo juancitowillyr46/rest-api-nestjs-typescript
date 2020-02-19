@@ -24,9 +24,11 @@ export class AuthController {
     @Post('signup')
     @HttpCode(200)
     async signUp(@Body() request: {username: string, password: string, email: string, acceptTerms: boolean}){
-        console.log(request);
-        // await this.authService.signUp(request);
-        return request;
+        const result =  await this.authService.signUp(request);
+        if(result.error === true){
+          throw new HttpException(result.message, result.statusCode);
+        }
+        return result;
     }
 
 }

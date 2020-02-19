@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, Inject, forwardRef } from "@nestjs/common";
 import { UsersRepository } from "./users.repository";
 import { UserCreateDto } from "./dto/user-create.dto";
 import { hash, genSalt, compare } from 'bcryptjs';
@@ -6,7 +6,10 @@ import { hash, genSalt, compare } from 'bcryptjs';
 @Injectable()
 export class UsersService {
 
-  constructor(private readonly usersRepository: UsersRepository) {}
+  constructor(
+    // @Inject(forwardRef(() => UsersRepository))
+    private readonly usersRepository: UsersRepository
+    ) {}
 
   async create(user: UserCreateDto) {
     let response: { data; statusCode; message; error };

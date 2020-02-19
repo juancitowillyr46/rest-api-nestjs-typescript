@@ -21,6 +21,8 @@ import { UsersModule } from 'src/users/users.module';
               schema: AuthSchema
             }
         ]),
+        // UsersService, 
+        // UsersRepository
     ],
     controllers: [
         AuthController, 
@@ -28,11 +30,14 @@ import { UsersModule } from 'src/users/users.module';
     providers: [
         AuthService,
         AuthRepository,
-        
+        // UsersService, 
+        // UsersRepository
     ],
     exports: [
         AuthService,
         AuthRepository,
+        // UsersService, 
+        // UsersRepository
     ]
 })
 export class AuthModule {}
