@@ -6,6 +6,7 @@ import { AuthRepository } from './auth.repository';
 // import { UsersModule } from 'src/users/users.module';
 // import { UsersService } from './../users/users.service';
 import { AuthSignUpDto } from './dto/auth-signup.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
     constructor(
         
         private authRepository: AuthRepository,
-
+        private readonly jwtService: JwtService
         // @Inject(forwardRef(() => UsersService))
         // private readonly usersService: UsersService
     ){}
@@ -23,16 +24,18 @@ export class AuthService {
         const result = await this.authRepository.signIn(request);
         if(result !== null) {
             const comparePassword = await compare(request.password, result.password);
+            const payload = { username: result.username, sub: result.id };
+            
             if(comparePassword){
                 response = {
-                    data: result,
+                    data: this.jwtService.sign(payload),
                     statusCode: 200,
                     message: 'Welcome',
                     error: false
                 }
             } else {
                 response = {
-                    data: result,
+                    data: this.jwtService.sign(payload),
                     statusCode: 400,
                     message: 'Error login',
                     error: true
