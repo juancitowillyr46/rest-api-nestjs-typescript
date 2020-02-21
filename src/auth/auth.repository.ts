@@ -38,4 +38,14 @@ export class AuthRepository {
         return find;
     }
 
+    async validateLogin(email: string): Promise<any> {
+        const that = this;
+        const find = await that.userModel.findOne({email: email}).then((res) => {
+            return (res)? res : null;
+        }).catch(() => {
+            return null;
+        });
+        return find;
+    }
+
 }

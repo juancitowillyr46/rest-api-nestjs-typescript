@@ -13,11 +13,15 @@ import {
   InternalServerErrorException,
   HttpException,
   NotFoundException,
+  UseGuards,
+  Request,
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { UserCreateDto } from "./dto/user-create.dto";
 import { UserGetDto } from "./dto/user-read.dto";
 import { Response } from 'express';
+import { AuthGuard } from "@nestjs/passport";
+
 @Controller("users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -58,9 +62,11 @@ export class UsersController {
     return await this.usersService.delete(id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
-  async findAll() {
-    return await this.usersService.findAll();
+  findAll() {
+    // console.log(req.user);
+    return this.usersService.findAll();
   }
 
 }

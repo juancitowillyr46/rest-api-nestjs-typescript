@@ -11,6 +11,11 @@ import { AuthRepository } from './auth.repository';
 import { UsersService } from './../users/users.service';
 import { UsersRepository } from 'src/users/users.repository';
 import { UsersModule } from 'src/users/users.module';
+import { LocalStrategy } from './local.strategy';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './constants';
+import { JwtStrategy } from './jwt.strategy';
 // import { UsersRepository } from 'src/users/users.repository';
 
 @Module({
@@ -21,6 +26,12 @@ import { UsersModule } from 'src/users/users.module';
               schema: AuthSchema
             }
         ]),
+        PassportModule.register({ defaultStrategy: 'jwt' }),
+
+        JwtModule.register({
+            secret: jwtConstants.secret,
+            signOptions: { expiresIn: '60s' },
+        }),
         // UsersService, 
         // UsersRepository
     ],
@@ -28,14 +39,19 @@ import { UsersModule } from 'src/users/users.module';
         AuthController, 
     ],
     providers: [
+        JwtStrategy,
         AuthService,
         AuthRepository,
-        // UsersService, 
+        // LocalStrategy,
+        
+        // UsersService, s
         // UsersRepository
     ],
     exports: [
         AuthService,
         AuthRepository,
+        // PassportModule,
+        // JwtStrategy,
         // UsersService, 
         // UsersRepository
     ]

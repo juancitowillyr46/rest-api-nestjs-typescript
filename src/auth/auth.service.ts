@@ -6,6 +6,7 @@ import { AuthRepository } from './auth.repository';
 // import { UsersModule } from 'src/users/users.module';
 // import { UsersService } from './../users/users.service';
 import { AuthSignUpDto } from './dto/auth-signup.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
@@ -13,19 +14,21 @@ export class AuthService {
     constructor(
         
         private authRepository: AuthRepository,
-
+        private readonly jwtService: JwtService
         // @Inject(forwardRef(() => UsersService))
         // private readonly usersService: UsersService
     ){}
 
-    async signIn(request: AuthSignInDto) {
+    async signIn(request: AuthSignInDto): Promise<any>  {
         let response: { data; statusCode; message; error };
         const result = await this.authRepository.signIn(request);
         if(result !== null) {
             const comparePassword = await compare(request.password, result.password);
             if(comparePassword){
+                const payload = { username: result.username, sub: result.id };
+                const accessToken = this.jwtService.sign(payload);
                 response = {
-                    data: result,
+                    data: { accessToken },
                     statusCode: 200,
                     message: 'Welcome',
                     error: false
@@ -89,5 +92,9 @@ export class AuthService {
         return response;
 
     }
+
+    // async validate(username: string, pass: string) {
+    //     const result = await this.authRepository.validateLogin();
+    // }
 
 }
