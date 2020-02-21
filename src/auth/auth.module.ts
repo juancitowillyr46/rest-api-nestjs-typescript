@@ -17,7 +17,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
 // import { UsersRepository } from 'src/users/users.repository';
-
 @Module({
     imports: [
         MongooseModule.forFeature([

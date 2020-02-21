@@ -24,6 +24,8 @@ export class AuthService {
         const result = await this.authRepository.signIn(request);
         if(result !== null) {
             const comparePassword = await compare(request.password, result.password);
+            const payload = { username: result.username, sub: result.id };
+            
             if(comparePassword){
                 const payload = { username: result.username, sub: result.id };
                 const accessToken = this.jwtService.sign(payload);
@@ -35,7 +37,7 @@ export class AuthService {
                 }
             } else {
                 response = {
-                    data: result,
+                    data: this.jwtService.sign(payload),
                     statusCode: 400,
                     message: 'Error login',
                     error: true
