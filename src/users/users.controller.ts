@@ -18,9 +18,10 @@ import {
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { UserCreateDto } from "./dto/user-create.dto";
-import { UserGetDto } from "./dto/user-read.dto";
+// import { UserGetDto } from "./dto/user-read.dto";
 import { Response } from 'express';
-import { AuthGuard } from "@nestjs/passport";
+// import { AuthGuard } from "@nestjs/passport";
+import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 
 @Controller("users")
 export class UsersController {
@@ -62,11 +63,10 @@ export class UsersController {
     return await this.usersService.delete(id);
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    // console.log(req.user);
-    return this.usersService.findAll();
+  async findAll() {
+    return await this.usersService.findAll();
   }
 
 }

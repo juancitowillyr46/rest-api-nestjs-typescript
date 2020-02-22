@@ -3,7 +3,7 @@ import { AuthSignInDto } from "./dto/auth-signin.dto";
 
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { User } from "src/users/interfaces/user.interface";
+import { User } from "./../users/interfaces/user.interface";
 import { AuthSignUpDto } from "./dto/auth-signup.dto";
 
 @Injectable()

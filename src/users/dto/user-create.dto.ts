@@ -13,4 +13,7 @@ export class UserCreateDto {
 
   @IsBoolean()
   acceptTerms: boolean;
+
+  @IsBoolean()
+  active: boolean;
 }

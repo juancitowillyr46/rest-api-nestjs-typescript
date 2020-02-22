@@ -6,4 +6,5 @@ export interface User extends Document {
   readonly password: string;
   readonly email: string;
   readonly acceptTerms: boolean;
+  readonly active: boolean;
 }

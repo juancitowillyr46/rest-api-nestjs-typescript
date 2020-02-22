@@ -2,6 +2,7 @@ import { Controller, Post, HttpCode, Body, HttpException, UseGuards } from '@nes
 import { AuthService } from './auth.service';
 import { AuthSignInDto } from './dto/auth-signin.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { AuthSignUpDto } from './dto/auth-signup.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -12,7 +13,6 @@ export class AuthController {
 
     }
 
-    // @UseGuards(AuthGuard('local'))
     @Post('signin')
     @HttpCode(200)
     async signIn(@Body() request: AuthSignInDto) {
@@ -25,7 +25,7 @@ export class AuthController {
 
     @Post('signup')
     @HttpCode(200)
-    async signUp(@Body() request: {username: string, password: string, email: string, acceptTerms: boolean}){
+    async signUp(@Body() request: AuthSignUpDto){
         const result =  await this.authService.signUp(request);
         if(result.error === true){
           throw new HttpException(result.message, result.statusCode);

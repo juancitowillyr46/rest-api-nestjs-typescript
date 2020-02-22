@@ -1,5 +1,5 @@
 export class UserGetDto {
-  // id: number;
+  id?: number;
   username?: string;
   password?: string;
   email?: string;

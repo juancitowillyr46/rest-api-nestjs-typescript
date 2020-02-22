@@ -14,4 +14,6 @@ export class AuthSignUpDto {
     @IsBoolean()
     acceptTerms: boolean;
 
+    @IsBoolean()
+    active: boolean;
 }

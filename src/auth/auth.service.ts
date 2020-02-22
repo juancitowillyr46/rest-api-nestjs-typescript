@@ -12,11 +12,8 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthService {
 
     constructor(
-        
         private authRepository: AuthRepository,
         private readonly jwtService: JwtService
-        // @Inject(forwardRef(() => UsersService))
-        // private readonly usersService: UsersService
     ){}
 
     async signIn(request: AuthSignInDto): Promise<any>  {
@@ -26,11 +23,20 @@ export class AuthService {
             const comparePassword = await compare(request.password, result.password);
             const payload = { username: result.username, sub: result.id };
             
+            if(!result.active) {
+                return response = {
+                    data: null,
+                    statusCode: 400,
+                    message: 'User inactive',
+                    error: true
+                }
+            }
+
             if(comparePassword){
                 const payload = { username: result.username, sub: result.id };
                 const accessToken = this.jwtService.sign(payload);
                 response = {
-                    data: { accessToken },
+                    data: { accessToken, ...payload },
                     statusCode: 200,
                     message: 'Welcome',
                     error: false
