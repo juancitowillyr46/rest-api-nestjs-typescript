@@ -1,5 +1,6 @@
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="100" alt="Nest Logo" /></a>
+  <a><img src="https://nestjs.com/img/logo_text.svg" width="100" /></a>
+  <a><img src="https://seeklogo.com/images/T/typescript-logo-B29A3F462D-seeklogo.com.png" width="100"></a>
 </p>
 
 # REST API
