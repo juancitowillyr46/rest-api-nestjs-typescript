@@ -3,7 +3,7 @@
 </p>
 
 # REST API
-Implementación de una REST API usando el Framework NestJS
+REST API wit the Framework NestJS
 
 Stack Tegnológico:
 - NestJS
